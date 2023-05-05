@@ -10,6 +10,8 @@ public class Posts {
     private String text;
     private String specLinks;
 
+    private String student;
+
     public Posts(String subjectName, String teacherFIO, String text, String specLinks, String student) {
         this.subjectName = subjectName;
         this.teacherFIO = teacherFIO;
@@ -18,11 +20,15 @@ public class Posts {
         this.student = student;
     }
 
-//    public Posts(Posts post){
-//        this.id = post.getId();
-//        this.specLinks=post.;
-//    }
-    private String student;
+    public Posts(Posts post){
+        this.id = post.getId();
+        this.specLinks=post.getSpecLinks();
+        this.student= post.getStudent();
+        this.text= post.getText();
+        this.teacherFIO=post.getTeacherFIO();
+        this.subjectName=post.getSubjectName();
+    }
+
 
     public Posts() {
 

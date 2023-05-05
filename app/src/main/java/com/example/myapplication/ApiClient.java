@@ -23,6 +23,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 import javax.xml.transform.Result;
 
@@ -94,7 +95,7 @@ public class ApiClient {
 //
 //    }
 
-    public Posts[] getDescriptions()  {
+    public List<Posts> getDescriptions()  {
 
 
 
@@ -104,11 +105,12 @@ public class ApiClient {
         try {
             Response response = client.newCall(request).execute();
             Posts[] descriptions = new ObjectMapper().readValue(response.body().string(), Posts[].class);
-            for (int i = 0; i < descriptions.length; i++) {
-                System.out.println(descriptions[i]);
-            }
 
-            return descriptions;
+            List<Posts> description= Arrays.stream(descriptions).collect(Collectors.toList());
+            for (int i = 0; i < description.size(); i++) {
+                System.err.println(description.get(i));
+            }
+            return description;
         } catch (IOException e) {
             throw new RuntimeException(e);
 

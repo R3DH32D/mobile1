@@ -24,22 +24,28 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 public class TapeActivity extends AppCompatActivity {
    // ArrayList<Posts> posts;
     ApiClient client = new ApiClient();
-    List<Posts> posts=new ArrayList<>();
+    List<Posts> posts= new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        thread.start();
+      //  thread.start();
         setContentView(R.layout.activity_tape);
 
-       // setInitialData();
+        thread.start();
+
         RecyclerView recyclerView = findViewById(R.id.list);
 
-
-        PostAdapter adapter = new PostAdapter(this, posts);
+        Thread thread1 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+           PostAdapter adapter = new PostAdapter(TapeActivity.this, posts);
+                recyclerView.setAdapter(adapter);
+            }});
+        thread1.start();
         //Toast toast = Toast.makeText(this, "постов нет",Toast.LENGTH_LONG);
-        recyclerView.setAdapter(adapter);
+
         Button postButton = (Button) findViewById(R.id.addPost);
         postButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,25 +59,7 @@ public class TapeActivity extends AppCompatActivity {
     }
     private void setInitialData(){
 
-  //      posts.add(new Posts ("www.youtube.com/watch?v=UYRdtfo5Ix0", "ООП","поставьте за курсач 4 плез", "Аршинский В.Л.", "redhead"));
-//        posts.add(new Posts ("www.youtube.com/watch?v=UYRdtfo5Ix0", "ООП","поставьте за курсач 4 плез", "Аршинский В.Л.", "redhead"));
-//        posts.add(new Posts ("www.youtube.com/watch?v=UYRdtfo5Ix0", "ООП","поставьте за курсач 4 плез", "Аршинский В.Л.", "redhead" ));
-//        posts.add(new Posts ("www.youtube.com/watch?v=UYRdtfo5Ix0", "ООП","поставьте за курсач 4 плез", "Аршинский В.Л.", "redhead"));
-//        posts.add(new Posts ("www.youtube.com/watch?v=UYRdtfo5Ix0", "ООП","поставьте за курсач 4 плез", "Аршинский В.Л.", "redhead"));
-//        posts.add(new Posts ("www.youtube.com/watch?v=UYRdtfo5Ix0", "ООП","поставьте за курсач 4 плез", "Аршинский В.Л.", "redhead"));
-//        posts.add(new Posts ("www.youtube.com/watch?v=UYRdtfo5Ix0", "ООП","поставьте за курсач 4 плез", "Аршинский В.Л.", "redhead"));
-//        posts.add(new Posts ("www.youtube.com/watch?v=UYRdtfo5Ix0", "ООП","поставьте за курсач 4 плез", "Аршинский В.Л.", "redhead" ));
-//        posts.add(new Posts ("www.youtube.com/watch?v=UYRdtfo5Ix0", "ООП","поставьте за курсач 4 плез", "Аршинский В.Л.", "redhead"));
-//        posts.add(new Posts ("www.youtube.com/watch?v=UYRdtfo5Ix0", "ООП","поставьте за курсач 4 плез", "Аршинский В.Л.", "redhead"));
-//        posts.add(new Posts ("www.youtube.com/watch?v=UYRdtfo5Ix0", "ООП","поставьте за курсач 4 плез", "Аршинский В.Л.", "redhead"));
-//        posts.add(new Posts ("www.youtube.com/watch?v=UYRdtfo5Ix0", "ООП","поставьте за курсач 4 плез", "Аршинский В.Л.", "redhead"));
-//        posts.add(new Posts ("www.youtube.com/watch?v=UYRdtfo5Ix0", "ООП","поставьте за курсач 4 плез", "Аршинский В.Л.", "redhead" ));
-//        posts.add(new Posts ("www.youtube.com/watch?v=UYRdtfo5Ix0", "ООП","поставьте за курсач 4 плез", "Аршинский В.Л.", "redhead"));
-//        posts.add(new Posts ("www.youtube.com/watch?v=UYRdtfo5Ix0", "ООП","поставьте за курсач 4 плез", "Аршинский В.Л.", "redhead"));
-//        posts.add(new Posts ("www.youtube.com/watch?v=UYRdtfo5Ix0", "ООП","поставьте за курсач 4 плез", "Аршинский В.Л.", "redhead"));
-//        posts.add(new Posts ("www.youtube.com/watch?v=UYRdtfo5Ix0", "ООП","поставьте за курсач 4 плез", "Аршинский В.Л.", "redhead"));
-//        posts.add(new Posts ("www.youtube.com/watch?v=UYRdtfo5Ix0", "ООП","поставьте за курсач 4 плез", "Аршинский В.Л.", "redhead" ));
-//        posts.add(new Posts ("www.youtube.com/watch?v=UYRdtfo5Ix0", "ООП","поставьте за курсач 4 плез", "Аршинский В.Л.", "redhead"));
+  //
 //        posts.add(new Posts ("www.youtube.com/watch?v=UYRdtfo5Ix0", "ООП","поставьте за курсач 4 плез", "Аршинский В.Л.", "redhead"));
     }
 
@@ -85,8 +73,12 @@ public class TapeActivity extends AppCompatActivity {
         public void run() {
 
             try {
+                List<Posts> d= client.getDescriptions();
 
-               posts= Arrays.stream(client.getDescriptions()).collect(Collectors.toList());
+                for (Posts p : d) {
+
+                    posts.add(new Posts(p.getSubjectName(),p.getTeacherFIO(),p.getText(), p.getSpecLinks(), p.getStudent()));
+                }
             } catch
             (NullPointerException e) {
 

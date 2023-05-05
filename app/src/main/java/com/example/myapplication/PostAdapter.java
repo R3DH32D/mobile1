@@ -50,15 +50,15 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
 public static class ViewHolder extends RecyclerView.ViewHolder {
 
-    final TextView userView, teacherView, descriptionView, subjectView, linksView;
+    private TextView userView, teacherView, descriptionView, subjectView, linksView;
     ViewHolder(View view){
         super(view);
 
-        userView = view.findViewById(R.id.user);
-        teacherView = view.findViewById(R.id.teacher);
-        descriptionView = view.findViewById(R.id.description);
-        subjectView = view.findViewById(R.id.subject);
-        linksView = view.findViewById(R.id.links);
+        userView = (TextView) view.findViewById(R.id.user);
+        teacherView = (TextView) view.findViewById(R.id.teacher);
+        descriptionView =(TextView) view.findViewById(R.id.description);
+        subjectView =(TextView) view.findViewById(R.id.subject);
+        linksView =(TextView) view.findViewById(R.id.links);
 
     }
 }}
