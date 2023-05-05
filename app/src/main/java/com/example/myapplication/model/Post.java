@@ -1,10 +1,15 @@
-package com.example.myapplication;
+package com.example.myapplication.model;
+
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-public class Posts {
+
+public class Post {
+
     private Long id;
+
     private String subjectName;
     private String teacherFIO;
     private String text;
@@ -12,7 +17,7 @@ public class Posts {
 
     private String student;
 
-    public Posts(String subjectName, String teacherFIO, String text, String specLinks, String student) {
+    public Post(String subjectName, String teacherFIO, String text, String specLinks, String student) {
         this.subjectName = subjectName;
         this.teacherFIO = teacherFIO;
         this.text = text;
@@ -20,7 +25,7 @@ public class Posts {
         this.student = student;
     }
 
-    public Posts(Posts post){
+    public Post(Post post){
         this.id = post.getId();
         this.specLinks=post.getSpecLinks();
         this.student= post.getStudent();
@@ -30,7 +35,7 @@ public class Posts {
     }
 
 
-    public Posts() {
+    public Post() {
 
     }
 
@@ -82,7 +87,7 @@ public class Posts {
         this.student = student;
     }
 
-    public Posts(Long id, String subjectName, String teacherFIO, String text, String specLinks, String student) {
+    public Post(Long id, String subjectName, String teacherFIO, String text, String specLinks, String student) {
         this.id = id;
         this.subjectName = subjectName;
         this.teacherFIO = teacherFIO;

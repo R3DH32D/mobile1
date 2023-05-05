@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.activity;
 
 
 
@@ -9,20 +9,25 @@ import android.view.ViewGroup;
 
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myapplication.model.Post;
+
 import java.util.List;
+
+import ru.toylep.example.R;
 
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     private final LayoutInflater inflater;
-    private final List<Posts> posts;
+    private final List<Post> posts;
 
-    PostAdapter(Context context, List<Posts> posts) {
+    PostAdapter(Context context, List<Post> posts) {
         this.posts = posts;
         this.inflater = LayoutInflater.from(context);
     }
+
+
     @Override
     public PostAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
@@ -31,10 +36,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     }
 
 
-
     @Override
     public void onBindViewHolder(PostAdapter.ViewHolder holder, int position) {
-        Posts post = posts.get(position);
+        Post post = posts.get(position);
 
         holder.userView.setText(post.getStudent());
         holder.teacherView.setText(post.getTeacherFIO());
@@ -48,13 +52,14 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         return posts.size();
     }
 
-public static class ViewHolder extends RecyclerView.ViewHolder {
 
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
     private TextView userView, teacherView, descriptionView, subjectView, linksView;
-    ViewHolder(View view){
+    public ViewHolder(View view){
         super(view);
 
-        userView = (TextView) view.findViewById(R.id.user);
+        userView = (TextView) view.findViewById(ru.toylep.example.R.id.user);
         teacherView = (TextView) view.findViewById(R.id.teacher);
         descriptionView =(TextView) view.findViewById(R.id.description);
         subjectView =(TextView) view.findViewById(R.id.subject);

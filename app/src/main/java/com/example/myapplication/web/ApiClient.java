@@ -1,31 +1,16 @@
-package com.example.myapplication;
+package com.example.myapplication.web;
 
-import android.os.AsyncTask;
-import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+import com.example.myapplication.model.Post;
+import com.example.myapplication.model.User;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.stream.Collectors;
-
-import javax.xml.transform.Result;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -56,7 +41,7 @@ public class ApiClient {
                          String name,
                          String lastName,
                          String login,
-                         String password) throws JsonProcessingException {
+                         String password) throws IOException {
         User user = new User(groups, name, lastName, login, password);
         String json = new ObjectMapper().writeValueAsString(user);
         MediaType JSON = MediaType.parse("application/json; charset=utf-8");
@@ -95,7 +80,7 @@ public class ApiClient {
 //
 //    }
 
-    public List<Posts> getDescriptions()  {
+    public List<Post> getDescriptions()  {
 
 
 
@@ -104,9 +89,9 @@ public class ApiClient {
 
         try {
             Response response = client.newCall(request).execute();
-            Posts[] descriptions = new ObjectMapper().readValue(response.body().string(), Posts[].class);
+            Post[] descriptions = new ObjectMapper().readValue(response.body().string(), Post[].class);
 
-            List<Posts> description= Arrays.stream(descriptions).collect(Collectors.toList());
+            List<Post> description= Arrays.stream(descriptions).collect(Collectors.toList());
             for (int i = 0; i < description.size(); i++) {
                 System.err.println(description.get(i));
             }

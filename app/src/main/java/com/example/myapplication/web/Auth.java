@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.web;
 
 public class Auth {
     private String login;

@@ -1,24 +1,20 @@
-package com.example.myapplication;
+package com.example.myapplication.activity;
 
-import static com.example.myapplication.R.id.teacherFio_name;
+
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
+import com.example.myapplication.web.ApiClient;
+
+import ru.toylep.example.R;
 
 
 public class AddPostActivity extends AppCompatActivity {
-
-
-
-
 
 
     @Override
