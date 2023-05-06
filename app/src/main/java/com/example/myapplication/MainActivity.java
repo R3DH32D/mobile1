@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,15 +23,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Button regButton = (Button) findViewById(R.id.button_SignUp);
         //Button logButton = (Button) findViewById(R.id.log_in_button);
-         TextView groups = (TextView) findViewById(R.id.groups);//new TextView(this);// findViewById(R.id.EditTextViewGroup);
+         EditText groups = (EditText) findViewById(R.id.groups);//new TextView(this);// findViewById(R.id.EditTextViewGroup);
 
-         TextView login = (TextView) findViewById(R.id.login); //new TextView(this);//findViewById(R.id.editTextViewLogin);
+        EditText login = (EditText) findViewById(R.id.login); //new TextView(this);//findViewById(R.id.editTextViewLogin);
 
-         TextView password =   (TextView) findViewById(R.id.password);//new TextView(this);// findViewById(R.id.editTextViewPassword);
+        EditText password =   (EditText) findViewById(R.id.password);//new TextView(this);// findViewById(R.id.editTextViewPassword);
 
-         TextView name =  (TextView) findViewById(R.id.name);//new TextView(this); //findViewById(R.id.editTextViewName);
+        EditText name =  (EditText) findViewById(R.id.name);//new TextView(this); //findViewById(R.id.editTextViewName);
 
-         TextView lastname = (TextView) findViewById(R.id.lastname);//new TextView(this);//findViewById(R.id.editTextViewLastName);
+        EditText lastname = (EditText) findViewById(R.id.lastname);//new TextView(this);//findViewById(R.id.editTextViewLastName);
 
        // apiInterface = ApiClient.getClient().create(ServerCon.class);
         regButton.setOnClickListener(new View.OnClickListener() {

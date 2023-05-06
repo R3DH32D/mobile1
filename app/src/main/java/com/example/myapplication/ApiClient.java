@@ -36,8 +36,8 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class ApiClient {
-
-    private static final String BASE_URL = "https://cb66-176-59-134-214.ngrok-free.app/";
+    private static final String BASE_URL1 = "https://cb66-176-59-134-214.ngrok-free.app";
+    private static final String BASE_URL = "http://192.168.194.243:8080";
     private static OkHttpClient client = new OkHttpClient();
 
     public User[] getUsers() {
@@ -61,7 +61,7 @@ public class ApiClient {
         String json = new ObjectMapper().writeValueAsString(user);
         MediaType JSON = MediaType.parse("application/json; charset=utf-8");
         RequestBody requestBody = RequestBody.create(JSON, json);
-        Request request = new Request.Builder().url("https://cb66-176-59-134-214.ngrok-free.app/api/users/reg").post(requestBody).build();
+        Request request = new Request.Builder().url(BASE_URL+"/api/users/reg").post(requestBody).build();
         try {
             Response response = client.newCall(request).execute();
 
@@ -71,36 +71,36 @@ public class ApiClient {
         }
 
     }
-//    public void postAddPost(Long id,
-//                            String subjectName,
-//                         String teacherFIO,
-//                         String text,
-//                         String specLinks,
-//                         String student) throws JsonProcessingException {
-//        Posts post=  new Posts(id,subjectName, teacherFIO, text, specLinks, student);
-//        String json = new ObjectMapper().writeValueAsString(post);
-//        MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-//        RequestBody requestBody = RequestBody.create(JSON, json);
-//        Request request = new Request.Builder().url(BASE_URL + "/api/desc/add").post(requestBody).build();
-//        try {
-//            Response response = client.newCall(request).execute();
-//
-//        } catch (JsonMappingException e) {
-//            e.printStackTrace();
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//
-//        }
-//
-//    }
+    public void postAddPost(Long id,
+                            String subjectName,
+                         String teacherFIO,
+                         String text,
+                         String specLinks,
+                         String author) throws JsonProcessingException {
+        Posts posts=  new Posts(id,subjectName, teacherFIO, text, specLinks, author);
+        String json = new ObjectMapper().writeValueAsString(posts);
+        MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+        RequestBody requestBody = RequestBody.create(JSON, json);
+        Request request = new Request.Builder().url(BASE_URL + "/api/desc/add").post(requestBody).build();
+        try {
+            Response response = client.newCall(request).execute();
+
+        } catch (JsonMappingException e) {
+            e.printStackTrace();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+
+    }
 
     public List<Posts> getDescriptions()  {
 
 
 
         String result = "";
-        okhttp3.Request request = new Request.Builder().url("https://cb66-176-59-134-214.ngrok-free.app/api/desc/all").build();
+        okhttp3.Request request = new Request.Builder().url(BASE_URL +"/api/desc/all").build();
 
         try {
             Response response = client.newCall(request).execute();

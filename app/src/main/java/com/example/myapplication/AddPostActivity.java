@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,39 +29,39 @@ public class AddPostActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_post);
         Button addButton = (Button) findViewById(R.id.addPostButton);
 
-        TextView teacherFIO_name = (TextView) findViewById(R.id.teacherFio_name);
+        EditText teacherFIO_name = (EditText) findViewById(R.id.teacherFio_name);
 
-        TextView student = (TextView) findViewById(R.id.student_name);
+        EditText author = (EditText) findViewById(R.id.student_name);
 
-        TextView subject =   (TextView) findViewById(R.id.subjectName_text);
+        EditText subject =   (EditText) findViewById(R.id.subjectName_text);
 
-        TextView links =  (TextView) findViewById(R.id.spec_links);
-        TextView post =  (TextView) findViewById(R.id.Text_post);
-        TextView id =  (TextView) findViewById(R.id.ID_view);
+        EditText links =  (EditText) findViewById(R.id.spec_links);
+        EditText post =  (EditText) findViewById(R.id.Text_post);
+
 
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ApiClient client = new ApiClient();
-//                Thread thread = new Thread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        try {
-//                            client.postAddPost(null,
-//                                    subject.getText().toString(),
-//                                    teacherFIO_name.getText().toString(),
-//                                    post.getText().toString(),
-//                                    links.getText().toString(),
-//                                    student.getText().toString());
-//
-//                        } catch (JsonProcessingException e) {
-//
-//                        }
-//
-//                        //
-//                    }
-//                });
-//                thread.start();
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            client.postAddPost(null,
+                                    subject.getText().toString(),
+                                    teacherFIO_name.getText().toString(),
+                                    post.getText().toString(),
+                                    links.getText().toString(),
+                                    author.getText().toString());
+
+                        } catch (JsonProcessingException e) {
+
+                        }
+
+                        //
+                    }
+                });
+                thread.start();
 
 
                 //group.setText("success");

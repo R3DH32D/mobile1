@@ -34,7 +34,11 @@ public class TapeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tape);
 
         thread.start();
-
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         RecyclerView recyclerView = findViewById(R.id.list);
 
         Thread thread1 = new Thread(new Runnable() {
@@ -44,6 +48,11 @@ public class TapeActivity extends AppCompatActivity {
                 recyclerView.setAdapter(adapter);
             }});
         thread1.start();
+        try {
+            thread1.join();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         //Toast toast = Toast.makeText(this, "постов нет",Toast.LENGTH_LONG);
 
         Button postButton = (Button) findViewById(R.id.addPost);
@@ -73,6 +82,7 @@ public class TapeActivity extends AppCompatActivity {
         public void run() {
 
             try {
+
                 List<Posts> d= client.getDescriptions();
 
                 for (Posts p : d) {
