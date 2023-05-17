@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -20,67 +21,64 @@ import android.widget.Toast;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-
-public class TapeActivity extends AppCompatActivity {
-   // ArrayList<Posts> posts;
+public class CommentActivity extends AppCompatActivity {
     ApiClient client = new ApiClient();
-    List<Posts> posts= new ArrayList<>();
+    List<Comment> comments= new ArrayList<>();
+
+  //  Bundle arguments = getIntent().getExtras();
+    Intent intent = getIntent();
+   // Long idPost = (Long) Long.parseLong(String.valueOf(arguments.getLong("id")));
+   //Long idPost= (Long) Long.parseLong(String.valueOf(intent.getStringExtra("id")));
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_comment);
 
-        setContentView(R.layout.activity_tape);
-
+      //  System.out.println(idPost);
         thread.start();
         try {
             thread.join();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        RecyclerView recyclerView = findViewById(R.id.list);
+        RecyclerView recyclerView = findViewById(R.id.Commlist);
 
         Thread thread1 = new Thread(new Runnable() {
             @Override
             public void run() {
-           PostAdapter adapter = new PostAdapter(TapeActivity.this, posts);
+                CommentAdapter adapter = new CommentAdapter(CommentActivity.this, comments);
                 recyclerView.setAdapter(adapter);
             }});
         thread1.start();
-        try {
-            thread1.join();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-
-        Button postButton = (Button) findViewById(R.id.addPost);
+        Button postButton = (Button) findViewById(R.id.AddComm);
         postButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(v.getContext(), AddPostActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(v.getContext(), AddPostActivity.class);
+//                startActivity(intent);
 
             }
         });
 
 
     }
-
-
-
-       Thread thread = new Thread(new Runnable() {
+    Thread thread = new Thread(new Runnable() {
         @Override
         public void run() {
 
             try {
 
-                List<Posts> d= client.getDescriptions();
+                List<Comment> d= client.getComments(Long.valueOf(1));
 
-                for (Posts p : d) {
+               for (Comment p : d) {
 
-                    posts.add(new Posts(p.getId(),p.getSubjectName(),p.getTeacherFIO(),p.getText(), p.getSpecLinks(), p.getStudent()));
+                    comments.add(new Comment(p.getText(),p.getDescription(), p.getStudent()));
+                   System.out.println(p.getText());
+                   System.out.println(p.getDescription());
+                   System.out.println(p.getStudent());
                 }
             } catch
             (NullPointerException e) {
@@ -90,9 +88,4 @@ public class TapeActivity extends AppCompatActivity {
 
 
     });
-
-
-
-
-
 }

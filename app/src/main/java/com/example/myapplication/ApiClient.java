@@ -1,5 +1,8 @@
 package com.example.myapplication;
 
+import static com.example.myapplication.App.clientApplication;
+import static com.example.myapplication.App.getClient;
+
 import android.os.AsyncTask;
 import android.widget.Toast;
 
@@ -29,6 +32,8 @@ import javax.xml.transform.Result;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.Credentials;
+import okhttp3.Interceptor;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -38,19 +43,40 @@ import okhttp3.Response;
 public class ApiClient {
     private static final String BASE_URL1 = "https://cb66-176-59-134-214.ngrok-free.app";
     private static final String BASE_URL = "http://192.168.194.243:8080";
-    private static OkHttpClient client = new OkHttpClient();
 
-    public User[] getUsers() {
-        //String result = "";
-        okhttp3.Request request = new okhttp3.Request.Builder().url(BASE_URL + "/api/users/find").build();
+    public static Intercept intercept;
+    private static OkHttpClient secondclient = getClient();
+    private static OkHttpClient client = new OkHttpClient();
+    private String credential;
+    public Boolean postAuth(
+            String login,
+            String password) throws JsonProcessingException {
+        User user = new User( login, password);
+
+        String json = new ObjectMapper().writeValueAsString(user);
+        MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+        RequestBody requestBody = RequestBody.create(JSON, json);
+
+        Request request = new Request.Builder().url(BASE_URL+"/api/users/sign_up").post(requestBody).build();
+
         try {
             Response response = client.newCall(request).execute();
-            User[] users = new ObjectMapper().readValue(response.body().string(), User[].class);
-            return users;
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println(response);
+            truth = new ObjectMapper().readValue(response.body().string(), Boolean.class);
+
+            if(truth){
+                intercept= new Intercept(login,password);
+                secondclient.newBuilder().addInterceptor(intercept).build();
+            }
+            System.out.println(truth);
+
         }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+        return truth;
     }
+
 
     public void postUser(String groups,
                          String name,
@@ -58,6 +84,7 @@ public class ApiClient {
                          String login,
                          String password) throws JsonProcessingException {
         User user = new User(groups, name, lastName, login, password);
+
         String json = new ObjectMapper().writeValueAsString(user);
         MediaType JSON = MediaType.parse("application/json; charset=utf-8");
         RequestBody requestBody = RequestBody.create(JSON, json);
@@ -71,6 +98,9 @@ public class ApiClient {
         }
 
     }
+    public Boolean truth;
+
+
     public void postAddPost(Long id,
                             String subjectName,
                          String teacherFIO,
@@ -83,7 +113,7 @@ public class ApiClient {
         RequestBody requestBody = RequestBody.create(JSON, json);
         Request request = new Request.Builder().url(BASE_URL + "/api/desc/add").post(requestBody).build();
         try {
-            Response response = client.newCall(request).execute();
+            Response response =secondclient.newBuilder().addInterceptor(intercept).build().newCall(request).execute();
 
         } catch (JsonMappingException e) {
             e.printStackTrace();
@@ -98,15 +128,41 @@ public class ApiClient {
     public List<Posts> getDescriptions()  {
 
 
-
+       // Long correctId =Long.parseLong(id);
         String result = "";
-        okhttp3.Request request = new Request.Builder().url(BASE_URL +"/api/desc/all").build();
+        okhttp3.Request request = new Request.Builder()
+                .url(BASE_URL +"/api/desc/all")
+                .build();
 
         try {
-            Response response = client.newCall(request).execute();
+            Response response = secondclient.newBuilder().addInterceptor(intercept).build().newCall(request).execute();
             Posts[] descriptions = new ObjectMapper().readValue(response.body().string(), Posts[].class);
 
             List<Posts> description= Arrays.stream(descriptions).collect(Collectors.toList());
+            for (int i = 0; i < description.size(); i++) {
+                System.err.println(description.get(i));
+            }
+            return description;
+        } catch (IOException e) {
+           throw new RuntimeException(e);
+
+        }
+
+    }
+    public List<Comment> getComments(Long id)  {
+
+
+
+        String result = "";
+        okhttp3.Request request = new Request.Builder()
+                .url(BASE_URL +"/api/comm/all/" + id)
+                .build();
+
+        try {
+            Response response = secondclient.newBuilder().addInterceptor(intercept).build().newCall(request).execute();
+            Comment[] descriptions = new ObjectMapper().readValue(response.body().string(), Comment[].class);
+
+            List<Comment> description= Arrays.stream(descriptions).collect(Collectors.toList());
             for (int i = 0; i < description.size(); i++) {
                 System.err.println(description.get(i));
             }
@@ -117,13 +173,4 @@ public class ApiClient {
         }
 
     }
-
-
-
-
-
-
-
-
-
 }

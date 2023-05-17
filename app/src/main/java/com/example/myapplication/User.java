@@ -18,7 +18,7 @@ public User(){};
         this.password = password;
     }
     public User( String login, String password) {
-        this.id = id;
+
         this.login = login;
         this.password = password;
     }

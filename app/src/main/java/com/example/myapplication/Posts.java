@@ -1,9 +1,11 @@
 package com.example.myapplication;
 
+import java.io.Serializable;
+
 import lombok.Data;
 
 @Data
-public class Posts {
+public class Posts implements Serializable {
     private Long id;
     private String subjectName;
     private String teacherFIO;

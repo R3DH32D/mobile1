@@ -31,7 +31,7 @@ public class AddPostActivity extends AppCompatActivity {
 
         EditText teacherFIO_name = (EditText) findViewById(R.id.teacherFio_name);
 
-        EditText author = (EditText) findViewById(R.id.student_name);
+
 
         EditText subject =   (EditText) findViewById(R.id.subjectName_text);
 
@@ -52,7 +52,7 @@ public class AddPostActivity extends AppCompatActivity {
                                     teacherFIO_name.getText().toString(),
                                     post.getText().toString(),
                                     links.getText().toString(),
-                                    author.getText().toString());
+                                    null);
 
                         } catch (JsonProcessingException e) {
 

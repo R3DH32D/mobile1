@@ -22,7 +22,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Button regButton = (Button) findViewById(R.id.button_SignUp);
-        //Button logButton = (Button) findViewById(R.id.log_in_button);
+
+        Button logButton = (Button) findViewById(R.id.loginButton);
          EditText groups = (EditText) findViewById(R.id.groups);//new TextView(this);// findViewById(R.id.EditTextViewGroup);
 
         EditText login = (EditText) findViewById(R.id.login); //new TextView(this);//findViewById(R.id.editTextViewLogin);
@@ -33,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
 
         EditText lastname = (EditText) findViewById(R.id.lastname);//new TextView(this);//findViewById(R.id.editTextViewLastName);
 
-       // apiInterface = ApiClient.getClient().create(ServerCon.class);
         regButton.setOnClickListener(new View.OnClickListener() {
          @Override
         public void onClick(View v) {
@@ -63,14 +63,19 @@ public class MainActivity extends AppCompatActivity {
              }
 
 
-             //thread.start();
-        //group.setText("success");
-             Intent intent = new Intent(v.getContext(), TapeActivity.class);
+             Intent intent = new Intent(v.getContext(), authActivity.class);
              startActivity(intent);
 
 
     }
 });
+        logButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), authActivity.class);
+                startActivity(intent);
 
+            }
+            });
     }
 }
