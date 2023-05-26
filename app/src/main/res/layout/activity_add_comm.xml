@@ -3,29 +3,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="70dp">
+    android:layout_height="match_parent"
+    tools:context=".AddCommActivity">
 
-    <TextView
-        android:id="@+id/StudCommText"
+    <EditText
+        android:id="@+id/EditTextAddComm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="stud"
+        android:text="commtext"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/comm_Text"
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/AddCommButton"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="comm"
+        android:text="add"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/StudCommText"
-        app:layout_constraintVertical_bias="1.0" />
-
+        app:layout_constraintTop_toBottomOf="@+id/EditTextAddComm"
+        app:layout_constraintVertical_bias="0.148" />
 </androidx.constraintlayout.widget.ConstraintLayout>

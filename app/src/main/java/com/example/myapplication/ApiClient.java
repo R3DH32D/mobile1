@@ -42,7 +42,7 @@ import okhttp3.Response;
 
 public class ApiClient {
     private static final String BASE_URL1 = "https://cb66-176-59-134-214.ngrok-free.app";
-    private static final String BASE_URL = "http://192.168.194.243:8080";
+    private static final String BASE_URL = "http://192.168.248.243:8080";
 
     public static Intercept intercept;
     private static OkHttpClient secondclient = getClient();
@@ -124,7 +124,27 @@ public class ApiClient {
         }
 
     }
+    public void postAddComm(Long id,
+                            String text,
 
+                            String author) throws JsonProcessingException {
+        Comment comment=  new Comment(id, text,  author);
+        String json = new ObjectMapper().writeValueAsString(comment);
+        MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+        RequestBody requestBody = RequestBody.create(JSON, json);
+        Request request = new Request.Builder().url(BASE_URL + "/api/comm/add/" + id ).post(requestBody).build();
+        try {
+            Response response =secondclient.newBuilder().addInterceptor(intercept).build().newCall(request).execute();
+
+        } catch (JsonMappingException e) {
+            e.printStackTrace();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+
+    }
     public List<Posts> getDescriptions()  {
 
 

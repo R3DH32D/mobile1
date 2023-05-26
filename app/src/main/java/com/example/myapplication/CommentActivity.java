@@ -38,8 +38,14 @@ public class CommentActivity extends AppCompatActivity {
 
       //  System.out.println(idPost);
         thread.start();
+
         try {
             thread.join();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            thread.sleep(2000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -52,14 +58,13 @@ public class CommentActivity extends AppCompatActivity {
                 recyclerView.setAdapter(adapter);
             }});
         thread1.start();
-        Button postButton = (Button) findViewById(R.id.AddComm);
-        postButton.setOnClickListener(new View.OnClickListener() {
+        Button CommButton = (Button) findViewById(R.id.AddComm);
+        CommButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-//                Intent intent = new Intent(v.getContext(), AddPostActivity.class);
-//                startActivity(intent);
-
+                Intent intent = new Intent(CommentActivity.this, AddCommActivity.class);
+                System.out.println(intent);
+                startActivity(intent);
             }
         });
 
@@ -68,14 +73,10 @@ public class CommentActivity extends AppCompatActivity {
     Thread thread = new Thread(new Runnable() {
         @Override
         public void run() {
-
             try {
-
-                List<Comment> d= client.getComments(Long.valueOf(1));
-
+                List<Comment> d= client.getComments(Long.valueOf(1L));
                for (Comment p : d) {
-
-                    comments.add(new Comment(p.getText(),p.getDescription(), p.getStudent()));
+                    comments.add(new Comment(p.getDescription(),p.getText(), p.getStudent()));
                    System.out.println(p.getText());
                    System.out.println(p.getDescription());
                    System.out.println(p.getStudent());

@@ -31,7 +31,7 @@ public class Comment {
         this.student = student;
     }
 
-    public Comment(String text, Long description, String student) {
+    public Comment( Long description,String text, String student) {
         this.description = description;
         this.text = text;
         this.student = student;
